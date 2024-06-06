@@ -38,6 +38,14 @@ if not vim.loop.fs_stat(lazypath) then
   require("core.bootstrap").lazy(lazypath)
 end
 
+vim.api.nvim_exec([[
+  augroup TmuxFocusEvents
+    autocmd!
+    autocmd FocusGained * silent !tmux set -g pane-active-border-style 'fg=colour51,bg=colour236'
+    autocmd FocusLost * silent !tmux set -g pane-active-border-style 'fg=colour235,bg=colour236'
+  augroup END
+]], false)
+
 dofile(vim.g.base46_cache .. "defaults")
 vim.opt.rtp:prepend(lazypath)
 require "plugins"
